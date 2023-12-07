@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { newUser } from './mockdata';
 
 const defaultOptions = {
   baseUrl: process.env.BASEURL_API,
@@ -10,10 +11,20 @@ const defaultHeaders = {
 };
 
 export const api = {
-  accounts: async (args: any) =>
+  createUser: async () =>
     axios({
-      url: `/customers/${args.customerId}/accounts`,
       ...defaultOptions,
-      ...defaultHeaders,
+      headers: { ...defaultHeaders },
+      method: 'POST',
+      url: '/users',
+      data: newUser(),
+    }),
+  contacts: async (args: any) =>
+    axios({
+      ...defaultOptions,
+      headers: { ...defaultHeaders },
+      method: 'GET',
+      url: '/contacts',
+      data: newUser(),
     }),
 };

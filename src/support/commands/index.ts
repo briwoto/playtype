@@ -1,7 +1,7 @@
 import { Page, expect } from '@playwright/test';
 import { selectors } from '../../fixtures/selectors';
 import { newUser } from '../../fixtures/mockdata';
-import { pause } from '../utils';
+import { urls } from '../../fixtures/urls';
 
 export const login = async (page: Page) => {
   const { login } = selectors;
@@ -11,7 +11,8 @@ export const login = async (page: Page) => {
 };
 
 /*
-An optimized version of the below function would be
+An optimized version for any form details
+const userKeys = Object.keys(user);
   for (const i in userKeys) {
     const key = userKeys[i];
     await page.locator(createUser[key]).fill(user[key]);
@@ -20,9 +21,8 @@ An optimized version of the below function would be
 export const createUser = async (page: Page) => {
   const user = newUser();
   const { createUser } = selectors;
-  await page.goto('https://thinking-tester-contact-list.herokuapp.com/addUser');
+  await page.goto(urls.addUser);
   console.info('Creating user');
-  const userKeys = Object.keys(user);
 
   // optimised function for this block mentioned above
   await page.locator(createUser.firstName).fill(user.firstName);
@@ -31,6 +31,9 @@ export const createUser = async (page: Page) => {
   await page.locator(createUser.password).fill(user.password);
 
   await page.locator(createUser.submitBtn).click();
-  await page.locator(selectors.contactList.logoutBtn).waitFor();
+  await Promise.all([
+    page.waitForResponse(urls.contactList),
+    page.locator(selectors.contactList.logoutBtn).waitFor(),
+  ]);
   console.info('User registration successful');
 };
