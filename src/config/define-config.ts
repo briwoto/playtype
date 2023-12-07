@@ -13,7 +13,7 @@ export const staticConfig = defineConfig({
   reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
-    baseURL: 'https://parabank.parasoft.com',
+    baseURL: 'https://thinking-tester-contact-list.herokuapp.com',
     viewport: null,
     // Run as headless in CI
     headless: process.env.CI ? true : false,

@@ -4,11 +4,16 @@ import * as utils from '../support/utils';
 import * as commands from '../support/commands';
 import { writeFileSync } from 'fs';
 
+const cookiePath = path.resolve(process.cwd(), process.env.COOKIE_PATH!);
+
 async function globalSetup() {
+  // create a storage.json file first
+  // so that even if global setup fails, the global teardown will pass
+  writeFileSync(cookiePath, JSON.stringify('{}'));
+
   const browser = await utils.createBrowser(process.env.PLATFORM!);
   const context = await browser.newContext();
   const page = await context.newPage();
-  const cookiePath = path.resolve(process.cwd(), process.env.COOKIE_PATH!);
   try {
     await commands.createUser(page);
     const storage = await context.storageState();
