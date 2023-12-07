@@ -1,6 +1,7 @@
 import * as path from 'path';
 import * as fs from 'node:fs';
 
+const failedStatuses = [400, 401, 403, 500, 501, 503];
 const mapFileDir = path.resolve(
   process.cwd(),
   `recordings/${process.env.AUTOMATION_TYPE!}`
@@ -37,3 +38,5 @@ export const pause = (ms: number) =>
   new Promise((resolve) => {
     setTimeout(resolve, ms);
   });
+
+export const isFailStatus = (status: number) => status in failedStatuses;

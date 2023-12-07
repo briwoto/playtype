@@ -16,4 +16,17 @@ export const selectors = {
   contactList: {
     logoutBtn: 'button#logout',
   },
+  addContact: {
+    firstName: 'input#firstName',
+    lastName: 'input#lastName',
+    birthdate: 'input#birthdate',
+    email: 'input#email',
+    phone: 'input#phone',
+    street1: 'input#street1',
+    street2: 'input#street2',
+    city: 'input#city',
+    stateProvince: 'input#stateProvince',
+    postalCode: 'input#postalCode',
+    country: 'input#country',
+  },
 };

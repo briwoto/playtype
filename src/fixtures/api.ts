@@ -1,30 +1,36 @@
-import axios from 'axios';
-import { newUser } from './mockdata';
+import axios, { AxiosRequestConfig } from 'axios';
+import { Contact, newContact, newUser } from './mockdata';
 
-const defaultOptions = {
-  baseUrl: process.env.BASEURL_API,
+const defaultOptions = (): AxiosRequestConfig => ({
+  baseURL: process.env.BASEURL_API,
   withCredentials: true,
-};
-const defaultHeaders = {
-  'Content-Type': 'application/json',
-  Accept: 'application/json',
-};
+  headers: {
+    'Content-Type': 'application/json',
+    Accept: 'application/json',
+    Authorization: `Bearer ${process.env.AUTH_TOKEN}`,
+  },
+});
 
 export const api = {
   createUser: async () =>
     axios({
-      ...defaultOptions,
-      headers: { ...defaultHeaders },
+      ...defaultOptions(),
       method: 'POST',
       url: '/users',
       data: newUser(),
     }),
-  contacts: async (args: any) =>
+  contacts: async () =>
     axios({
-      ...defaultOptions,
-      headers: { ...defaultHeaders },
+      ...defaultOptions(),
       method: 'GET',
       url: '/contacts',
       data: newUser(),
+    }),
+  addContact: async (contactDetails?: Contact) =>
+    axios({
+      ...defaultOptions(),
+      method: 'POST',
+      url: '/contacts',
+      data: contactDetails || newContact(),
     }),
 };
