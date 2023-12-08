@@ -15,6 +15,7 @@ export const selectors = {
   },
   contactList: {
     logoutBtn: 'button#logout',
+    firstName: 'tr.contactTableBodyRow>td:nth-child(2)',
   },
   addContact: {
     firstName: 'input#firstName',

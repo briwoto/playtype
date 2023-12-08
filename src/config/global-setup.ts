@@ -17,23 +17,13 @@ async function globalSetup() {
   try {
     // create user and store cookies
     await commands.createUser(page);
-    await commands.storeAllCookies(context, cookiePath);
-    const authCookie = await commands.getCookieFromBrowser('token', context);
+    await utils.storeAllCookies(context, cookiePath);
+    const authCookie = await utils.getCookieFromBrowser('token', context);
     process.env.AUTH_TOKEN = authCookie[0].value;
-    console.log('process.env.AUTH_TOKEN');
-    console.log(process.env.AUTH_TOKEN);
   } catch (errCreateUSer) {
     console.error('Error creating new user', errCreateUSer);
   } finally {
-    const videoPath = path.resolve(
-      process.cwd(),
-      `recordings`,
-      `global-setup.webm`
-    );
-    await page.close();
-    if (page.video()) {
-      await page.video()?.saveAs(videoPath);
-    }
+    await utils.saveVideo(page, 'global-setup.webm');
     try {
       await context.close();
       await browser.close();
