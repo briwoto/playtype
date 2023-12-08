@@ -1,27 +1,7 @@
+import { Contact, User } from '.';
 import * as utils from '../support/utils';
 
-export type NewUser = {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-};
-
-export type Contact = {
-  firstName: string;
-  lastName: string;
-  birthdate?: string;
-  email?: string;
-  phone?: number;
-  street1?: string;
-  street2?: string;
-  city?: string;
-  stateProvince?: string;
-  postalCode?: string;
-  country?: string;
-};
-
-export const newUser = (): NewUser => ({
+export const newUser = (): User => ({
   firstName: utils.getRandomAlphaNumeric(6),
   lastName: utils.getRandomAlphaNumeric(6),
   email: utils.generateRandomEmail(),

@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig } from 'axios';
-import { Contact, newContact, newUser } from './mockdata';
+import { Contact, User } from '.';
 
 const defaultOptions = (): AxiosRequestConfig => ({
   baseURL: process.env.BASEURL_API,
@@ -12,25 +12,30 @@ const defaultOptions = (): AxiosRequestConfig => ({
 });
 
 export const api = {
-  createUser: async () =>
+  createUser: async (user: User) =>
     axios({
       ...defaultOptions(),
       method: 'POST',
       url: '/users',
-      data: newUser(),
+      data: user,
     }),
-  contacts: async () =>
+  deleteUser: async () =>
+    axios({
+      ...defaultOptions(),
+      method: 'DELETE',
+      url: '/users/me',
+    }),
+  getContacts: async () =>
     axios({
       ...defaultOptions(),
       method: 'GET',
       url: '/contacts',
-      data: newUser(),
     }),
-  addContact: async (contactDetails?: Contact) =>
+  addContact: async (contactDetails: Contact) =>
     axios({
       ...defaultOptions(),
       method: 'POST',
       url: '/contacts',
-      data: contactDetails || newContact(),
+      data: contactDetails,
     }),
 };

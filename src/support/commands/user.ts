@@ -1,6 +1,7 @@
 import { Page } from '@playwright/test';
 import { waitForContactsPage } from '.';
-import { newUser, urls, selectors } from '../../fixtures';
+import { newUser, urls, selectors, api } from '../../fixtures';
+import { isFailStatus } from '../utils';
 
 export const login = async (page: Page) => {
   const { login } = selectors;
@@ -35,4 +36,13 @@ export const createUser = async (page: Page) => {
   console.info('User registration successful');
   process.env.EMAIL = userData.email;
   process.env.PASSWORD = userData.password;
+};
+
+export const deleteUser = async () => {
+  const data = await api.deleteUser();
+  if (isFailStatus(data.status)) {
+    console.error(
+      `Add contact api request failed with status code ${data.status}`
+    );
+  }
 };

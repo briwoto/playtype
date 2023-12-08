@@ -1,9 +1,8 @@
 import { test, expect } from '@playwright/test';
 import * as commands from '../support/commands';
-import { after } from 'node:test';
 
 test.describe('Sample Test plan for automation', () => {
-  test('Contact page open upon login', async ({ page }) => {
+  test('Contact page opens upon login', async ({ page }) => {
     await commands.openContactsPage(page);
   });
 

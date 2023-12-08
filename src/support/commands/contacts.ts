@@ -12,6 +12,7 @@ export const waitForContactsPage = async (page: Page) => {
     page.waitForResponse(urls.endpoints.contacts),
     page.locator(selectors.contactList.logoutBtn).waitFor(),
   ]);
+  await page.waitForLoadState('load');
 };
 
 export const addContactViaApi = async (
@@ -46,6 +47,7 @@ export const addContact = async (
   }
   await page.locator(addContact.submitBtn).click();
   await waitForContactsPage(page);
+  await page.locator(selectors.contactList.firstName).nth(0).waitFor();
   return contactData;
 };
 

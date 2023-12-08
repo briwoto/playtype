@@ -43,7 +43,7 @@ export const pause = (ms: number) =>
 export const isFailStatus = (status: number) => status in failedStatuses;
 
 export const generateRandomDob = () => {
-  const year = `19${Math.floor(Math.random() * 100)}`;
+  const year = `${Math.floor(Math.random() * 20) + 1980}`;
   const month = twoDigitString();
   const date = twoDigitString();
   return `${year}-${month}-${date}`;
