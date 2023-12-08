@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
-import { urls, selectors, newContact } from '../fixtures';
 import * as commands from '../support/commands';
+import { after } from 'node:test';
 
 test.describe('Sample Test plan for automation', () => {
   test('Contact page open upon login', async ({ page }) => {
@@ -8,20 +8,17 @@ test.describe('Sample Test plan for automation', () => {
   });
 
   test('Add a contact via API', async ({ page }) => {
-    const contactDetails = newContact();
-    const fullName = `${contactDetails.firstName} ${contactDetails.lastName}`;
-    await commands.addContactViaApi(contactDetails);
+    const contact = await commands.addContactViaApi();
+    const fullName = `${contact.firstName} ${contact.lastName}`;
     await commands.openContactsPage(page);
-    const namesList = await page
-      .locator(selectors.contactList.firstName)
-      .allTextContents();
-    expect(namesList).toContain(fullName);
+    expect(await commands.isContactInContactList(page, fullName)).toBeTruthy;
   });
 
   test('Add contact via contact form', async ({ page }) => {
-    const contactDetails = newContact();
     await commands.openContactsPage(page);
     await commands.openAddContactForm(page);
-    await commands.addContact(page, contactDetails);
+    const contact = await commands.addContact(page);
+    const fullName = `${contact.firstName} ${contact.lastName}`;
+    expect(await commands.isContactInContactList(page, fullName)).toBeTruthy;
   });
 });
