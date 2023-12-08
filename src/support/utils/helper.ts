@@ -2,6 +2,7 @@ import * as path from 'path';
 import * as fs from 'node:fs';
 
 const failedStatuses = [400, 401, 403, 500, 501, 503];
+const twoDigitString = () => `0${Math.ceil(Math.random() * 10)}`.slice(-2);
 const mapFileDir = path.resolve(
   process.cwd(),
   `recordings/${process.env.AUTOMATION_TYPE!}`
@@ -40,3 +41,10 @@ export const pause = (ms: number) =>
   });
 
 export const isFailStatus = (status: number) => status in failedStatuses;
+
+export const generateRandomDob = () => {
+  const year = `19${Math.floor(Math.random() * 100)}`;
+  const month = twoDigitString();
+  const date = twoDigitString();
+  return `${year}-${month}-${date}`;
+};

@@ -1,6 +1,13 @@
 import { Page } from '@playwright/test';
-import { selectors, Contact, newUser, urls, api } from '../../fixtures';
-import { isFailStatus } from '../utils';
+import {
+  selectors,
+  Contact,
+  newUser,
+  urls,
+  api,
+  newContact,
+} from '../../fixtures';
+import { isFailStatus, pause } from '../utils';
 
 export const login = async (page: Page) => {
   const { login } = selectors;
@@ -48,14 +55,29 @@ export const waitForContactsPage = async (page: Page) => {
 };
 
 export const addContactViaApi = async (contactDetails?: Contact) => {
-  try {
-    const data = await api.addContact(contactDetails);
-    if (isFailStatus(data.status)) {
-      console.error(
-        `Add contact api request failed with status code ${data.status}`
-      );
-    }
-  } catch (err) {
-    console.error(err);
+  const data = await api.addContact(contactDetails);
+  if (isFailStatus(data.status)) {
+    console.error(
+      `Add contact api request failed with status code ${data.status}`
+    );
   }
+};
+
+export const openAddContactForm = async (page: Page) => {
+  await page.locator(selectors.contactList.addContactBtn).click();
+  await page.locator(selectors.addContact.submitBtn).waitFor();
+  await pause(500);
+};
+
+export const addContact = async (page: Page, contactData?: Contact) => {
+  const { addContact } = selectors;
+  contactData ?? newContact();
+  const contactKeys = Object.keys(contactData);
+  for (const i in contactKeys) {
+    const key = contactKeys[i];
+    await page.locator(addContact[key]).fill(`${contactData[key]}`);
+  }
+  await page.pause();
+  await page.locator(addContact.submitBtn).click();
+  await waitForContactsPage(page);
 };

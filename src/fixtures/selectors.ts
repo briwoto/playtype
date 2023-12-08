@@ -16,6 +16,7 @@ export const selectors = {
   contactList: {
     logoutBtn: 'button#logout',
     firstName: 'tr.contactTableBodyRow>td:nth-child(2)',
+    addContactBtn: 'button#add-contact',
   },
   addContact: {
     firstName: 'input#firstName',
@@ -29,5 +30,6 @@ export const selectors = {
     stateProvince: 'input#stateProvince',
     postalCode: 'input#postalCode',
     country: 'input#country',
+    submitBtn: 'button#submit',
   },
 };

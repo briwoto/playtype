@@ -1,4 +1,4 @@
-import { generateRandomEmail, getRandomAlphaNumeric } from '../support/utils';
+import * as utils from '../support/utils';
 
 export type NewUser = {
   firstName: string;
@@ -22,22 +22,22 @@ export type Contact = {
 };
 
 export const newUser = (): NewUser => ({
-  firstName: getRandomAlphaNumeric(6),
-  lastName: getRandomAlphaNumeric(6),
-  email: generateRandomEmail(),
-  password: getRandomAlphaNumeric(5),
+  firstName: utils.getRandomAlphaNumeric(6),
+  lastName: utils.getRandomAlphaNumeric(6),
+  email: utils.generateRandomEmail(),
+  password: utils.getRandomAlphaNumeric(5),
 });
 
 export const newContact = (args?: Contact): Contact => ({
-  firstName: args?.firstName || getRandomAlphaNumeric(6),
-  lastName: args?.lastName || getRandomAlphaNumeric(6),
-  birthdate: args?.birthdate,
-  email: args?.email,
-  phone: args?.phone,
-  street1: args?.street1,
+  firstName: args?.firstName || utils.getRandomAlphaNumeric(6),
+  lastName: args?.lastName || utils.getRandomAlphaNumeric(6),
+  birthdate: args?.birthdate || utils.generateRandomDob(),
+  email: args?.email || utils.generateRandomEmail(),
+  phone: args?.phone || utils.generateRandomPhoneNumber(),
+  street1: args?.street1 || utils.generateRandomAddress(),
   street2: args?.street2,
-  city: args?.city,
-  stateProvince: args?.stateProvince,
-  postalCode: args?.postalCode,
-  country: args?.country,
+  city: args?.city || 'Berlin',
+  stateProvince: args?.stateProvince || 'Berlin',
+  postalCode: args?.postalCode || '10367',
+  country: args?.country || 'Germany',
 });

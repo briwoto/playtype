@@ -17,4 +17,11 @@ test.describe('Sample Test plan for automation', () => {
       .allTextContents();
     expect(namesList).toContain(fullName);
   });
+
+  test('Add contact via contact form', async ({ page }) => {
+    const contactDetails = newContact();
+    await commands.openContactsPage(page);
+    await commands.openAddContactForm(page);
+    await commands.addContact(page, contactDetails);
+  });
 });
